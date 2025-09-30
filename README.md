@@ -1,291 +1,132 @@
-# AI Physio - AI-Powered Physiotherapy Platform
+# AI Physio
 
-## Overview
+AI Physio is a SvelteKit application that generates personalized physiotherapy workouts using AI and guides users through timed sessions with rich media (images and YouTube videos). It features OAuth login with Supabase, a modern sporty UI, and a simple end‑to‑end flow from plan generation to session feedback.
 
-AI Physio is a SvelteKit-based application that provides AI-powered physiotherapy guidance and personalized workout recommendations. The platform helps users with their fitness and rehabilitation journey through intelligent exercise programs and real-time guidance.
+## Features
 
-## 1. External API Endpoints (CONSEN_API_ENDPOINT)
+- Personalized workout generation with Google Generative AI (Gemini) fallback plans
+- Guided workout session with timers, next/prev controls, and phase progression
+- Image and YouTube video embeds per exercise (auto‑embed for youtube.com/youtu.be)
+- Post‑workout feedback with SVG star ratings and dashboard navigation
+- Modern UI using the color palette `#3182CE`, `#63B3ED`, `#1F2937`
+- Supabase OAuth (Google/Azure) with SSR session handling
 
-The application makes calls to external translation and processing APIs through the `CONSEN_API_ENDPOINT`. Here are all the endpoints being called:
+## Tech Stack
 
-### Translation Services
-- **`/translate_v2`** - Main translation endpoint for document translations
-- **`/api/v2/instant_translation`** - Instant translation service for quick document processing
+- SvelteKit 2 + Svelte 5 (runes)
+- TypeScript
+- Tailwind CSS 4
+- Supabase (`@supabase/ssr`, `@supabase/supabase-js`)
+- Google Generative AI (`@google/generative-ai`)
+- Vite
 
-### Document Processing
-- **`/parse_pdf`** - PDF document parsing and text extraction
-- **`/parse_docx`** - DOCX document parsing and text extraction  
-- **`/parse_pptx`** - PPTX presentation parsing and text extraction
-- **`/documents/parse_pdf`** - Alternative PDF parsing endpoint for document uploads
+## Project Structure (key paths)
 
-### Export Services
-- **`/export_pdf`** - Export translated documents as PDF
-- **`/export_docx`** - Export translated documents as DOCX
-- **`/export_pptx`** - Export translated documents as PPTX
+- `src/routes/+page.svelte` – Landing page
+- `src/routes/sign-in/+page.svelte` – Sign‑in UI (OAuth buttons)
+- `src/routes/dashboard/+page.svelte` – User dashboard
+- `src/routes/workout/generate/+page.svelte` – Plan generator UI
+- `src/routes/workout/session/+page.svelte` – Guided session with timers and media
+- `src/routes/workout/feedback/+page.svelte` – Session feedback and rating
+- `src/routes/api/workout/generate/+server.ts` – Plan generation API (AI prompt + fallback data)
+- `src/lib/components/Button.svelte`, `StarRating.svelte` – Shared UI components
+- `src/lib/data/exerciseMedia.ts` – Exercise media metadata (images/videos)
 
-### Glossary & Keywords
-- **`/kw_extraction_v2`** - Keyword extraction from documents
-- **`/kw_extraction_v2/status/{taskId}`** - Check status of keyword extraction tasks
+## Getting Started
 
-### Fallback Configuration
-All endpoints have fallback support:
-- **Production**: Uses `CONSEN_API_ENDPOINT` when available
-- **Development**: Falls back to `PUBLIC_API_DEVELOPMENT_ENDPOINT` (default: `http://0.0.0.0:8000`)
+### Prerequisites
 
-## 2. Authentication & Login Flow
+- Node.js 18+
+- A Supabase project (with OAuth providers enabled)
+- Optional: Google Generative AI API key
 
-### OAuth-Based Authentication
-The application uses Supabase for authentication with OAuth providers:
+### Installation
 
-#### Supported Providers
-- **Google OAuth** (`provider: 'google'`)
-- **Microsoft Azure OAuth** (`provider: 'azure'`)
-
-#### Login Process Flow
-1. **Login Initiation** (`/sign-in`)
-   - User clicks login button
-   - Application redirects to OAuth provider
-   - Redirect URL: `{domain}/sign-in/confirm`
-
-2. **OAuth Confirmation** (`/sign-in/confirm`)
-   - Handle OAuth callback
-   - Process state parameters for redirect logic
-   - Create user profile if first-time user
-
-3. **User Profile Creation** (Automatic)
-   - New users get 10 free credits
-   - Profile includes: name, avatar, email, credits balance
-   - Automatic organization creation for each user
-
-4. **Session Management**
-   - JWT-based session validation
-   - Safe session retrieval with user validation
-   - Automatic redirects for protected routes
-
-#### Protected Routes
-- Routes containing `/payment` or `/project` require authentication
-- Exception: routes containing `/instant` (for anonymous access)
-- Unauthenticated users redirected to `/sign-in`
-
-#### State Parameter Handling
-The login system supports complex redirect scenarios:
-- **Pricing redirects**: Return to pricing page after login
-- **Insta-mode with purchases**: Preserve purchase intent during login
-- **Project continuation**: Resume project work after authentication
-
-## 3. Insta-Mode Flow
-
-Insta-mode provides instant document translation with a streamlined 3-step process.
-
-### Step 1: File Upload
-1. **File Selection**
-   - Supports PDF and PPTX files
-   - Drag & drop or file picker interface
-   - File validation and size checks
-
-2. **Language Detection**
-   - Automatic source language detection using `franc` library
-   - Language mapping for common language codes
-   - Manual language selection override available
-
-3. **Anonymous User Limits**
-   - Upload limit: 5 files per day
-   - Translation limit: 1 translation per day
-   - Tracked via localStorage with daily reset
-
-### Step 2: Processing & Translation
-1. **Project Creation**
-   - Creates instant project with unique URL key
-   - Stores file metadata and language settings
-   - Links to user account if authenticated
-
-2. **Translation Processing**
-   - Calls `/api/v2/instant_translation` endpoint
-   - Page-based credit system for authenticated users
-   - Limited to 1 page for anonymous users
-
-3. **Progress Tracking**
-   - Real-time progress indicator (simulated)
-   - Error handling and user feedback
-   - Credit deduction for authenticated users
-
-### Step 3: Preview & Download
-1. **File Preview**
-   - PDF.js-powered document viewer
-   - Full translated document display
-   - Mobile-responsive preview interface
-
-2. **Download Options**
-   - Direct file download
-   - Multiple download methods for CORS compatibility
-   - Filename preservation
-
-3. **Authentication Prompts**
-   - Anonymous users prompted to login for additional features
-   - Preserved state for post-login continuation
-
-### Anonymous User System
-The application includes a sophisticated anonymous user tracking system:
-
-#### Features
-- **Browser-based tracking** using localStorage
-- **Daily limits** with automatic reset at midnight
-- **Session persistence** across browser sessions
-- **Abuse prevention** without requiring registration
-
-#### Implementation
-```typescript
-interface AnonymousSession {
-    id: string;               // Unique anonymous ID
-    createdAt: string;        // Session creation timestamp
-    lastActiveAt: string;     // Last activity timestamp
-    translations: number;     // Daily translation count
-    uploadsToday: number;     // Daily upload count
-    dailyResetDate: string;   // Date for daily limit reset
-}
+```bash
+npm install
 ```
-
-#### Limits
-- **Translations**: 1 per day
-- **Uploads**: 5 per day
-- **Automatic reset**: Daily at midnight
-- **Error recovery**: Automatic session recreation if corrupted
-
-## 4. Project Configuration Requirements
 
 ### Environment Variables
 
-#### Required Variables
+Create a `.env` at the project root:
+
 ```bash
-# Supabase Configuration
+# Supabase (required)
 PUBLIC_SUPABASE_URL="https://<project-id>.supabase.co"
 PUBLIC_SUPABASE_ANON_KEY="<supabase-anon-key>"
-SUPABASE_SERVICE_ROLE_KEY="<service-role-key>"
 
-# Storage Configuration  
-PUBLIC_SUPABASE_DOC_BUCKET_URL="https://<project-id>.supabase.co/storage/v1/object/public/docs"
+# Optional: Google Generative AI (Gemini)
+GOOGLE_GENERATIVE_AI_API_KEY="<gemini-api-key>"
 
-# API Endpoints
-CONSEN_API_ENDPOINT="<production-api-domain>"
-PUBLIC_API_DEVELOPMENT_ENDPOINT="http://0.0.0.0:8000"
-
-# PayOS Configuration
+# Optional: Payments (disabled by default)
 PAYOS_CLIENT_ID="<payos-client-id>"
 PAYOS_API_KEY="<payos-api-key>"
 PAYOS_CHECKSUM_KEY="<payos-checksum-key>"
 ```
 
-#### Environment Setup
-1. Create `.env` file in project root
-2. Copy variables from example above
-3. Replace placeholder values with actual credentials
-4. Ensure `.env` is in `.gitignore` (already configured)
+Note: Supabase is wired in `src/hooks.server.ts` using `@supabase/ssr` and requires only the public URL and anon key for client auth.
 
-### Development Setup
+### Development
 
-#### Prerequisites
-- **Node.js** (v18 or higher)
-- **npm/pnpm/yarn** package manager
-- **Supabase project** with appropriate tables and storage buckets
-
-#### Installation & Setup
 ```bash
-# Install dependencies
-npm install
-
-# Start development server
+# Run dev server
 npm run dev
 
-# Build for production
-npm run build
+# Type-check and lint
+npm run check
+npm run lint
 
-# Preview production build
+# Build and preview
+npm run build
 npm run preview
 ```
 
-#### Development Configuration
-- **Port**: 3000 (configurable in `vite.config.ts`)
-- **Allowed hosts**: Configured for ngrok development
-- **Hot reload**: Enabled for Svelte components
+## Core Flows
 
-### Database Requirements (Supabase)
+### 1) Generate a Workout
 
-#### Required Tables
-- **`user_profiles`** - User account information and credits
-- **`projects`** - Document translation projects
-- **`organizations`** - User organization management
+- Route: `src/routes/workout/generate/+page.svelte`
+- Server: `src/routes/api/workout/generate/+server.ts`
+  - Accepts user preferences and returns a plan with phases: warmup, main, cooldown
+  - Includes `imageUrl`, `videoUrl`, and `mediaType: 'image' | 'video'`
+  - Fallback plan ships with curated Unsplash images and YouTube links
 
-#### Required Storage Buckets
-- **`docs`** - Document file storage
+### 2) Run the Session
 
-#### Authentication Setup
-- Enable Google OAuth provider
-- Enable Microsoft Azure OAuth provider
-- Configure redirect URLs for authentication flow
+- Route: `src/routes/workout/session/+page.svelte`
+- Features:
+  - Accurate timer per exercise; timers are cleared on navigation to avoid overlap
+  - Media rendering: if `videoUrl` is YouTube, it auto‑embeds via `<iframe>`; otherwise uses `<video>`
+  - Progress bar and phase labels (Warm‑up, Main, Cool‑down)
 
-### Production Considerations
+### 3) Leave Feedback
 
-#### Performance Optimizations
-- **PDF.js**: Dynamically loaded to avoid SSR issues
-- **Code splitting**: Automatic with SvelteKit
-- **Static asset optimization**: Tailwind CSS with purging
+- Route: `src/routes/workout/feedback/+page.svelte`
+- Uses `StarRating.svelte` with SVG stars and supports navigation back to the dashboard
 
-#### Security
-- **Environment variable isolation**: Private keys server-side only
-- **CORS configuration**: Proper headers for API calls
-- **Session validation**: JWT verification with Supabase
+## Customizing Media
 
-#### Deployment
-- **Adapter**: Uses `@sveltejs/adapter-auto` for platform detection
-- **Build output**: Optimized for serverless deployment
-- **Environment variables**: Configure in deployment platform
+- Update mock media in `src/routes/api/workout/generate/+server.ts`
+- YouTube links are converted to embed automatically (supported patterns: `youtube.com/watch?v=…`, `youtu.be/…`)
+- Additional examples live in `src/lib/data/physiotherapyVideos.ts`
 
-### Key Dependencies
+## Branding & UI
 
-#### Core Framework
-- **SvelteKit** - Full-stack framework
-- **Svelte 5** - Component framework with runes
-- **TypeScript** - Type safety
+- Colors: `#3182CE` (primary), `#63B3ED` (accent), `#1F2937` (text/dark)
+- Buttons: variants and sizes via `src/lib/components/Button.svelte`
+- Logo: `static/ai_physio_logo.png` referenced in headers/footers
 
-#### Authentication & Database
-- **Supabase** - Backend as a Service
-- **@supabase/ssr** - Server-side rendering support
+## Deployment
 
-#### Document Processing
-- **PDF.js** - PDF rendering and text extraction
-- **JSZip** - PPTX file processing
-- **franc** - Language detection
+- Default adapter is `@sveltejs/adapter-auto`
+- Configure the same environment variables in your hosting platform (PUBLIC_* keys are safe for the client)
 
-#### UI & Styling
-- **Tailwind CSS 4** - Utility-first CSS framework
-- **@tailwindcss/forms** - Form styling
-- **Sass** - CSS preprocessing
+## Troubleshooting
 
-#### Development Tools
-- **Vite** - Build tool and dev server
-- **ESLint** - Code linting
-- **Prettier** - Code formatting
+- Auth not working: verify `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_ANON_KEY`, and OAuth provider redirect URLs in Supabase
+- Videos not playing: ensure `videoUrl` is a valid YouTube link or a reachable media file
+- Type errors: run `npm run check` and ensure `tsconfig.json` is used
 
-### Troubleshooting Common Issues
+---
 
-#### Environment Variable Issues
-- Ensure all required variables are set
-- Check variable naming (PUBLIC_ prefix for client-side)
-- Verify Supabase project configuration
-
-#### Authentication Problems
-- Verify OAuth provider configuration
-- Check redirect URL whitelist in Supabase
-- Ensure service role key has proper permissions
-
-#### API Connection Issues
-- Test both CONSEN_API_ENDPOINT and fallback endpoint
-- Verify network connectivity and CORS configuration
-- Check API endpoint availability and authentication
-
-#### File Upload Problems
-- Verify Supabase storage bucket permissions
-- Check file size limits and supported formats
-- Ensure proper CORS configuration for storage bucket
-
-This documentation provides a comprehensive overview of the Omniglot project's architecture, flows, and configuration requirements. The system is designed to be scalable, secure, and user-friendly while providing both anonymous and authenticated experiences.
+Built with ❤️ for better health and mobility.
