@@ -227,6 +227,18 @@
 		
 		return Math.round((completedExercises / totalExercises) * 100);
 	};
+
+	const getYouTubeEmbedUrl = (url: string) => {
+		// Convert YouTube URL to embed URL
+		if (url.includes('youtube.com/watch?v=')) {
+			const videoId = url.split('v=')[1].split('&')[0];
+			return `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`;
+		} else if (url.includes('youtu.be/')) {
+			const videoId = url.split('youtu.be/')[1].split('?')[0];
+			return `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`;
+		}
+		return url;
+	};
 </script>
 
 <svelte:head>
@@ -274,7 +286,7 @@
 			<div class="max-w-4xl mx-auto">
 				<div class="w-full bg-gray-200 rounded-full h-2">
 					<div 
-						class="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+						class="bg-[#63B3ED] h-2 rounded-full transition-all duration-300" 
 						style="width: {getProgressPercentage()}%"
 					></div>
 				</div>
@@ -289,7 +301,7 @@
 						<div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center sticky top-8">
 							<!-- Timer Display -->
 							<div class="mb-8">
-								<div class="text-5xl font-bold text-blue-600 mb-2">
+								<div class="text-5xl font-bold text-[#63B3ED] mb-2">
 									{formatTime(timeRemaining)}
 								</div>
 								<div class="text-gray-600">
@@ -327,7 +339,7 @@
 								<div class="flex space-x-2 mt-4">
 									<button 
 										onclick={prevExercise}
-										class="flex-1 py-2 px-4 text-sm text-gray-500 hover:text-gray-700"
+										class="flex-1 py-2 text-sm text-gray-500 hover:text-gray-700"
 										disabled={currentPhase === 'warmup' && currentExerciseIndex === 0}
 									>
 										← Previous
@@ -346,15 +358,49 @@
 					<!-- Exercise Details -->
 					<div class="lg:col-span-2">
 						<div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-							<!-- Exercise Image -->
-							{#if getCurrentExercise().imageUrl}
+							<!-- Exercise Media (Image or Video) -->
+							{#if getCurrentExercise().imageUrl || getCurrentExercise().videoUrl}
 								<div class="mb-6">
-									<img 
-										src={getCurrentExercise().imageUrl} 
-										alt={getCurrentExercise().name}
-										class="w-full h-48 object-cover rounded-lg shadow-sm"
-										loading="lazy"
-									/>
+									{#if getCurrentExercise().mediaType === 'video' && getCurrentExercise().videoUrl}
+										<div class="relative w-full h-64 bg-gray-100 rounded-lg overflow-hidden shadow-sm">
+											{#if getCurrentExercise().videoUrl.includes('youtube.com') || getCurrentExercise().videoUrl.includes('youtu.be')}
+												<!-- YouTube Embed -->
+												<iframe 
+													src={getYouTubeEmbedUrl(getCurrentExercise().videoUrl)}
+													class="w-full h-full"
+													frameborder="0"
+													allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+													allowfullscreen
+												></iframe>
+											{:else}
+												<!-- Direct Video File -->
+												<video 
+													src={getCurrentExercise().videoUrl}
+													class="w-full h-full object-cover"
+													controls
+													preload="metadata"
+													poster={getCurrentExercise().imageUrl}
+												>
+													Your browser does not support the video tag.
+												</video>
+											{/if}
+											<div class="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded text-xs">
+												📹 Video Guide
+											</div>
+										</div>
+									{:else if getCurrentExercise().imageUrl}
+										<div class="relative w-full h-48 bg-gray-100 rounded-lg overflow-hidden shadow-sm">
+											<img 
+												src={getCurrentExercise().imageUrl} 
+												alt={getCurrentExercise().name}
+												class="w-full h-full object-cover"
+												loading="lazy"
+											/>
+											<div class="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded text-xs">
+												📷 Image Guide
+											</div>
+										</div>
+									{/if}
 								</div>
 							{/if}
 
@@ -387,7 +433,7 @@
 								<ol class="space-y-3">
 									{#each getCurrentExercise().instructions as instruction, index}
 										<li class="flex items-start space-x-3">
-											<span class="flex-shrink-0 w-6 h-6 bg-blue-600 text-white text-sm font-bold rounded-full flex items-center justify-center">
+											<span class="flex-shrink-0 w-6 h-6 bg-[#63B3ED] text-white text-sm font-bold rounded-full flex items-center justify-center">
 												{index + 1}
 											</span>
 											<span class="text-gray-700">{instruction}</span>

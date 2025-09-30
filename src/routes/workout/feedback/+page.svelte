@@ -2,6 +2,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
+  import StarRating from '$lib/components/StarRating.svelte';
 
 	const {data} = $props(); let user = data.user;
 	let loading = $state(false);
@@ -9,7 +10,7 @@
 	let difficulty = $state('just_right');
 	let painReduction = $state(3);
 	let comments = $state('');
-	let improvements = $state([]);
+	let improvements = $state<string[]>([]);
 
 	// Redirect if not logged in
 	$effect(() => {
@@ -33,7 +34,7 @@
 		{ id: 'different_focus', label: 'Different focus areas' }
 	];
 
-	const toggleImprovement = (improvementId) => {
+	const toggleImprovement = (improvementId : string) => {
 		if (improvements.includes(improvementId)) {
 			improvements = improvements.filter(i => i !== improvementId);
 		} else {
@@ -83,7 +84,7 @@
 	<header class="w-full px-6 py-4">
 		<div class="max-w-4xl mx-auto flex justify-between items-center">
 			<div class="flex items-center space-x-2">
-				<div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+				<div class="w-8 h-8 bg-[#63B3ED] rounded-lg flex items-center justify-center">
 					<span class="text-white font-bold text-lg">🏃</span>
 				</div>
 				<h1 class="text-2xl font-bold text-gray-900">AI Physio</h1>
@@ -111,14 +112,7 @@
 			<div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
 				<h3 class="text-xl font-semibold text-gray-900 mb-4">Overall satisfaction</h3>
 				<div class="flex justify-center space-x-2 mb-4">
-					{#each [1, 2, 3, 4, 5] as star}
-						<button
-							onclick={() => rating = star}
-							class="text-3xl transition-colors {rating >= star ? 'text-yellow-400' : 'text-gray-300'}"
-						>
-							⭐
-						</button>
-					{/each}
+					<StarRating rating={rating} interactive={true} size="large" onRatingChange={(r) => rating = r} />
 				</div>
 				<p class="text-center text-gray-600">
 					{rating === 1 ? 'Poor' : rating === 2 ? 'Fair' : rating === 3 ? 'Good' : rating === 4 ? 'Very good' : 'Excellent'}
@@ -183,7 +177,7 @@
 								type="checkbox"
 								checked={improvements.includes(option.id)}
 								onchange={() => toggleImprovement(option.id)}
-								class="w-4 h-4 text-blue-600 rounded"
+								class="w-4 h-4 text-[#63B3ED] rounded"
 							/>
 							<span class="text-gray-700">{option.label}</span>
 						</label>

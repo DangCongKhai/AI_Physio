@@ -121,7 +121,7 @@
 	<header class="w-full px-6 py-4">
 		<div class="max-w-4xl mx-auto flex justify-between items-center">
 			<div class="flex items-center space-x-2">
-				<div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+				<div class="w-8 h-8 bg-[#63B3ED] rounded-lg flex items-center justify-center">
 					<span class="text-white font-bold text-lg">🏃</span>
 				</div>
 				<h1 class="text-2xl font-bold text-gray-900">AI Physio</h1>
@@ -136,7 +136,7 @@
 	<div class="w-full px-6 mb-8">
 		<div class="max-w-4xl mx-auto">
 			<div class="w-full bg-gray-200 rounded-full h-2">
-				<div class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: {(currentStep / totalSteps) * 100}%"></div>
+				<div class="bg-[#63B3ED] h-2 rounded-full transition-all duration-300" style="width: {(currentStep / totalSteps) * 100}%"></div>
 			</div>
 		</div>
 	</div>
@@ -209,7 +209,7 @@
 			<div class="max-w-md mx-auto">
 				<div class="bg-white rounded-xl p-8 shadow-sm border border-gray-200">
 					<div class="text-center mb-6">
-						<div class="text-4xl font-bold text-blue-600 mb-2">{timeAvailable} minutes</div>
+						<div class="text-4xl font-bold text-[#63B3ED] mb-2">{timeAvailable} minutes</div>
 						<p class="text-gray-600">per session</p>
 					</div>
 					

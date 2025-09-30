@@ -71,28 +71,23 @@
 
 <div class="my-auto flex w-full flex-col gap-6">
 	{#if isSignIn}
-		<div class="flex flex-col gap-2">
-			<h1 class="text-2xl font-semibold text-black">Welcomback</h1>
-			<p class="text-neutral-600">Sign in</p>
-		</div>
-
-		<Button className="w-full" variant="primary" size="md" onclick={loginWithGoogle} {loading}>
-			{#if !loading}
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 30 30"
-					width="16px"
-					height="16px"
-					fill="currentColor"
-					class="mr-2"
-				>
-					<path
-						d="M 15.003906 3 C 8.3749062 3 3 8.373 3 15 C 3 21.627 8.3749062 27 15.003906 27 C 25.013906 27 27.269078 17.707 26.330078 13 L 25 13 L 22.732422 13 L 15 13 L 15 17 L 22.738281 17 C 21.848702 20.448251 18.725955 23 15 23 C 10.582 23 7 19.418 7 15 C 7 10.582 10.582 7 15 7 C 17.009 7 18.839141 7.74575 20.244141 8.96875 L 23.085938 6.1289062 C 20.951937 4.1849063 18.116906 3 15.003906 3 z"
-					/>
-				</svg>
-			{/if}
-			Continue with Google
-		</Button>
+	<div class="text-center mb-8">
+							<h1 class="text-3xl font-bold text-[#1F2937] mb-2">Welcome Back</h1>
+							<p class="text-slate-600">Sign in to continue your fitness journey</p>
+						</div>
+		<button
+		onclick={loginWithGoogle}
+        class="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100"
+      >
+        <!-- SVG for Google -->
+        <img
+          src="https://raw.githubusercontent.com/sidiDev/remote-assets/7cd06bf1d8859c578c2efbfda2c68bd6bedc66d8/google-icon.svg"
+          alt="Google"
+          class="w-5 h-5"
+        />
+        <!-- Comment: Google Icon SVG here -->
+        Continue with Google
+      </button>
 		<!-- <Button className="w-full px-4 bg-[#2F2F2F]" onclick={loginWithMicrosoft} {loading}>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -125,33 +120,29 @@
 		</p>
 	{:else}
 		<div class="flex flex-col gap-2">
-			<h1 class="text-2xl font-semibold text-black">Sign up title</h1>
+			<h1 class="text-2xl font-semibold text-black">Sign up</h1>
 			<p class="text-neutral-600">
 				{#if message}
 					{message}
 				{:else}
-					Description
+					Create new account for using our service
 				{/if}
 			</p>
 		</div>
 
-		<Button className="w-full" variant="primary" size="md" onclick={loginWithGoogle} {loading}>
-			{#if !loading}
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 30 30"
-					width="16px"
-					height="16px"
-					fill="currentColor"
-					class="mr-2"
-				>
-					<path
-						d="M 15.003906 3 C 8.3749062 3 3 8.373 3 15 C 3 21.627 8.3749062 27 15.003906 27 C 25.013906 27 27.269078 17.707 26.330078 13 L 25 13 L 22.732422 13 L 15 13 L 15 17 L 22.738281 17 C 21.848702 20.448251 18.725955 23 15 23 C 10.582 23 7 19.418 7 15 C 7 10.582 10.582 7 15 7 C 17.009 7 18.839141 7.74575 20.244141 8.96875 L 23.085938 6.1289062 C 20.951937 4.1849063 18.116906 3 15.003906 3 z"
-					/>
-				</svg>
-			{/if}
-			Create account with Google
-		</Button>
+		<button
+		onclick={loginWithGoogle}
+        class="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100"
+      >
+        <!-- SVG for Google -->
+        <img
+          src="https://raw.githubusercontent.com/sidiDev/remote-assets/7cd06bf1d8859c578c2efbfda2c68bd6bedc66d8/google-icon.svg"
+          alt="Google"
+          class="w-5 h-5"
+        />
+        <!-- Comment: Google Icon SVG here -->
+        Create account with Google
+      </button>
 		<!-- <Button className="w-full px-4 bg-[#2F2F2F]" onclick={loginWithMicrosoft} {loading}>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

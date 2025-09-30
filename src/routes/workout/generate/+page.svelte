@@ -97,11 +97,13 @@
 	<!-- Header -->
 	<header class="w-full px-6 py-4 bg-white shadow-sm">
 		<div class="max-w-4xl mx-auto flex justify-between items-center">
-			<div class="flex items-center space-x-2">
-				<div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-					<span class="text-white font-bold text-lg">🏃</span>
-				</div>
-				<h1 class="text-2xl font-bold text-gray-900">AI Physio</h1>
+			<div class="flex items-center space-x-3">
+				<img 
+					src="/ai_physio_logo.png" 
+					alt="AI Physio Logo" 
+					class="w-12 h-12"
+				/>
+				<h1 class="text-2xl font-bold text-[#1F2937]">AI Physio</h1>
 			</div>
 			<button onclick={() => goto('/dashboard')} class="text-gray-600 hover:text-gray-800">
 				← Back to Dashboard
@@ -127,7 +129,7 @@
 				<div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
 					<h3 class="text-xl font-semibold text-gray-900 mb-4">Session Length</h3>
 					<div class="mb-4">
-						<div class="text-2xl font-bold text-blue-600 mb-2">{customTime} minutes</div>
+						<div class="text-2xl font-bold text-[#63B3ED] mb-2">{customTime} minutes</div>
 						<p class="text-gray-600 text-sm">Your usual: {preferences.time_available} minutes</p>
 					</div>
 					
@@ -156,7 +158,7 @@
 									type="radio"
 									bind:group={specialFocus}
 									value={option.id}
-									class="w-4 h-4 text-blue-600"
+									class="w-4 h-4 text-[#63B3ED]"
 								/>
 								<span class="text-gray-700">{option.label}</span>
 							</label>
@@ -195,7 +197,7 @@
 				
 				<button 
 					onclick={() => goto('/onboarding')}
-					class="mt-4 text-blue-600 hover:text-blue-800 text-sm font-medium"
+					class="mt-4 text-[#63B3ED] hover:text-blue-800 text-sm font-medium"
 				>
 					Update preferences →
 				</button>

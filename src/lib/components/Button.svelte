@@ -25,32 +25,32 @@
 	const getVariantClasses = (variant: string) => {
 		switch (variant) {
 			case 'primary':
-				return 'bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:shadow-md';
+				return 'bg-[#3182CE] hover:bg-[#1E40AF] text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5';
 			case 'secondary':
-				return 'bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-300';
+				return 'bg-slate-100 hover:bg-slate-200 text-[#1F2937] border border-slate-300 shadow-sm hover:shadow-md';
 			case 'outline':
-				return 'border border-blue-600 text-blue-600 hover:bg-blue-50 bg-transparent';
+				return 'border-2 border-[#3182CE] text-[#3182CE] hover:bg-[#3182CE] hover:text-white bg-transparent shadow-sm hover:shadow-md';
 			case 'ghost':
-				return 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 bg-transparent';
+				return 'text-slate-600 hover:text-[#1F2937] hover:bg-slate-100 bg-transparent';
 			default:
-				return 'bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:shadow-md';
+				return 'bg-[#3182CE] hover:bg-[#1E40AF] text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5';
 		}
 	};
 
 	const getSizeClasses = (size: string) => {
 		switch (size) {
 			case 'sm':
-				return 'px-3 py-1.5 text-sm';
+				return 'px-4 py-2 text-sm rounded-lg';
 			case 'md':
-				return 'px-4 py-2 text-base';
+				return 'px-6 py-3 text-base rounded-xl';
 			case 'lg':
-				return 'px-6 py-3 text-lg';
+				return 'px-8 py-4 text-lg rounded-xl';
 			default:
-				return 'px-4 py-2 text-base';
+				return 'px-6 py-3 text-base rounded-xl';
 		}
 	};
 
-	let baseClasses = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-current';
+	let baseClasses = 'inline-flex items-center justify-center font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#63B3ED] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-current disabled:transform-none';
 	let variantClasses = getVariantClasses(variant);
 	let sizeClasses = getSizeClasses(size);
 </script>

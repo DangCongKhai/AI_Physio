@@ -41,7 +41,7 @@
 						class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10"
 					>
 						<svg
-							class="h-6 w-6 text-blue-600"
+							class="h-6 w-6 text-[#63B3ED]"
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"
@@ -70,7 +70,7 @@
 						onclick={handleYes}
 						type="button"
 						data-behavior="commit"
-						class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
+						class="inline-flex w-full justify-center rounded-md border border-transparent bg-[#63B3ED] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
 					>
 						Yes
 					</button>

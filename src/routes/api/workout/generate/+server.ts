@@ -23,6 +23,8 @@ interface Exercise {
 	difficulty: string;
 	benefits: string;
 	imageUrl?: string;
+	videoUrl?: string;
+	mediaType?: 'image' | 'video';
 }
 
 interface WorkoutPlan {
@@ -92,7 +94,9 @@ Please respond with ONLY a valid JSON object in this exact format:
       "targetAreas": ["area1", "area2"],
       "difficulty": "easy|medium|hard",
       "benefits": "What this exercise helps with",
-      "imageUrl": "https://images.unsplash.com/photo-example?w=400&h=300&fit=crop&crop=center"
+      "imageUrl": "https://images.unsplash.com/photo-example?w=400&h=300&fit=crop&crop=center",
+      "videoUrl": "https://example.com/video.mp4",
+      "mediaType": "image"
     }
   ],
   "exercises": [
@@ -104,7 +108,9 @@ Please respond with ONLY a valid JSON object in this exact format:
       "targetAreas": ["area1", "area2"],
       "difficulty": "easy|medium|hard",
       "benefits": "What this exercise helps with",
-      "imageUrl": "https://images.unsplash.com/photo-example?w=400&h=300&fit=crop&crop=center"
+      "imageUrl": "https://images.unsplash.com/photo-example?w=400&h=300&fit=crop&crop=center",
+      "videoUrl": "https://example.com/video.mp4",
+      "mediaType": "image"
     }
   ],
   "cooldown": [
@@ -116,7 +122,9 @@ Please respond with ONLY a valid JSON object in this exact format:
       "targetAreas": ["area1", "area2"],
       "difficulty": "easy|medium|hard",
       "benefits": "What this exercise helps with",
-      "imageUrl": "https://images.unsplash.com/photo-example?w=400&h=300&fit=crop&crop=center"
+      "imageUrl": "https://images.unsplash.com/photo-example?w=400&h=300&fit=crop&crop=center",
+      "videoUrl": "https://example.com/video.mp4",
+      "mediaType": "image"
     }
   ]
 }
@@ -162,7 +170,9 @@ function generateFallbackPlan(request: WorkoutRequest): WorkoutPlan {
 				targetAreas: ["neck"],
 				difficulty: "easy",
 				benefits: "Relieves neck tension and improves mobility",
-				imageUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&crop=center"
+				imageUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop&crop=face",
+				videoUrl: "https://www.youtube.com/watch?v=2M80Mn0VBPw", // Neck Rolls - Replace with real physiotherapy video
+				mediaType: "video"
 			},
 			{
 				name: "Shoulder Shrugs",
@@ -177,7 +187,9 @@ function generateFallbackPlan(request: WorkoutRequest): WorkoutPlan {
 				targetAreas: ["shoulders"],
 				difficulty: "easy",
 				benefits: "Reduces shoulder tension and improves circulation",
-				imageUrl: "https://images.unsplash.com/photo-1506629905607-f53b44b46f78?w=400&h=300&fit=crop&crop=center"
+				imageUrl: "https://images.unsplash.com/photo-1506629905607-f53b44b46f78?w=600&h=400&fit=crop&crop=center",
+				videoUrl: "shoulder shrugs- https://youtu.be/ja_P3YhmAlE?si=YrwSHZVKbM_K5m51",
+				mediaType: "video"
 			},
 			{
 				name: "Arm Circles",
@@ -192,7 +204,9 @@ function generateFallbackPlan(request: WorkoutRequest): WorkoutPlan {
 				targetAreas: ["shoulders", "arms"],
 				difficulty: "easy",
 				benefits: "Warms up shoulder joints and improves range of motion",
-				imageUrl: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=300&fit=crop&crop=center"
+				imageUrl: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=400&fit=crop&crop=center",
+				videoUrl: "https://www.youtube.com/watch?v=140RTNMciH8",
+				mediaType: "video"
 			}
 		],
 		main: [
@@ -209,7 +223,9 @@ function generateFallbackPlan(request: WorkoutRequest): WorkoutPlan {
 				targetAreas: ["lower_back", "upper_back"],
 				difficulty: "easy",
 				benefits: "Improves spinal flexibility and reduces back pain",
-				imageUrl: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop&crop=center"
+				imageUrl: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop&crop=center",
+				videoUrl: "https://youtu.be/AlnydRPKvY0?si=I3RG7QnyQrv6Q5vV", // Neck Rolls - Replace with real physiotherapy video
+				mediaType: "video"
 			},
 			{
 				name: "Child's Pose",
@@ -224,7 +240,9 @@ function generateFallbackPlan(request: WorkoutRequest): WorkoutPlan {
 				targetAreas: ["lower_back", "hips"],
 				difficulty: "easy",
 				benefits: "Gently stretches the back and promotes relaxation",
-				imageUrl: "https://images.unsplash.com/photo-1506629905607-f53b44b46f78?w=400&h=300&fit=crop&crop=center"
+				imageUrl: "https://images.unsplash.com/photo-1506629905607-f53b44b46f78?w=600&h=400&fit=crop&crop=center",
+				videoUrl: "https://www.youtube.com/watch?v=_ZX_zTOBgp8",
+				mediaType: "video"
 			},
 			{
 				name: "Hip Flexor Stretch",
@@ -238,7 +256,10 @@ function generateFallbackPlan(request: WorkoutRequest): WorkoutPlan {
 				],
 				targetAreas: ["hips"],
 				difficulty: "medium",
-				benefits: "Counteracts effects of prolonged sitting"
+				benefits: "Counteracts effects of prolonged sitting",
+				imageUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop&crop=center",
+				videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", // Neck Rolls - Replace with real physiotherapy video
+				mediaType: "video"
 			},
 			{
 				name: "Seated Spinal Twist",
@@ -252,7 +273,9 @@ function generateFallbackPlan(request: WorkoutRequest): WorkoutPlan {
 				],
 				targetAreas: ["upper_back", "lower_back"],
 				difficulty: "easy",
-				benefits: "Improves spinal rotation and relieves back tension"
+				benefits: "Improves spinal rotation and relieves back tension",
+				imageUrl: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=400&fit=crop&crop=center",
+				mediaType: "image"
 			},
 			{
 				name: "Forward Fold",
@@ -266,7 +289,10 @@ function generateFallbackPlan(request: WorkoutRequest): WorkoutPlan {
 				],
 				targetAreas: ["lower_back", "hamstrings"],
 				difficulty: "medium",
-				benefits: "Lengthens spine and relieves tension"
+				benefits: "Lengthens spine and relieves tension",
+				imageUrl: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop&crop=center",
+				videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", // Neck Rolls - Replace with real physiotherapy video
+				mediaType: "video"
 			}
 		],
 		cooldown: [
@@ -282,7 +308,10 @@ function generateFallbackPlan(request: WorkoutRequest): WorkoutPlan {
 				],
 				targetAreas: ["full_body"],
 				difficulty: "easy",
-				benefits: "Activates relaxation response and reduces stress"
+				benefits: "Activates relaxation response and reduces stress",
+				imageUrl: "https://images.unsplash.com/photo-1506629905607-f53b44b46f78?w=600&h=400&fit=crop&crop=center",
+				videoUrl: "https://www.youtube.com/watch?v=kpSkoXRrZnE", // Neck Rolls - Replace with real physiotherapy video
+				mediaType: "video"
 			},
 			{
 				name: "Gentle Twist",
@@ -296,7 +325,10 @@ function generateFallbackPlan(request: WorkoutRequest): WorkoutPlan {
 				],
 				targetAreas: ["lower_back"],
 				difficulty: "easy",
-				benefits: "Final release for the spine"
+				benefits: "Final release for the spine",
+				imageUrl: "https://www.theragear.com/images/exercises/yg_gntlspnltwst_1.jpg?w=600&h=400&fit=crop&crop=center",
+				videoUrl: "https://www.youtube.com/watch?v=qEVNj4tcr0Y",
+				mediaType: "video"
 			}
 		]
 	};

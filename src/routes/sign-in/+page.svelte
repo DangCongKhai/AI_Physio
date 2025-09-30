@@ -21,14 +21,23 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Sign in</title>
+</svelte:head>
 
-
-<div class="h-[100vh] overflow-hidden bg-white">
+<div class="h-[100vh] overflow-hidden bg-gradient-to-br from-slate-50 to-blue-50">
 	<div class="grid h-full grid-cols-9 gap-4">
 		<div class="col-span-9 flex flex-col justify-end md:col-span-4">
 			<div class="p-6">
 				<a href="/">
-					<div class="text-2xl font-bold text-blue-600">AI Physio</div>
+					<div class="flex items-center space-x-3">
+						<img 
+							src="/ai_physio_logo.png" 
+							alt="AI Physio Logo" 
+							class="w-12 h-12"
+						/>
+						<div class="text-2xl font-bold text-[#1F2937]">AI Physio</div>
+					</div>
 				</a>
 			</div>
 
@@ -42,55 +51,56 @@
 
 			<div class="grid grid-cols-7">
 				<div class="col-span-5 col-start-2 py-8">
-					<p class="text-xs text-neutral-600">
+					<p class="text-xs text-slate-600">
 						By continuing, you agree to our
-						<a href="/terms" class="underline">Terms of Service</a>
+						<a href="/terms" class="underline text-[#3182CE] hover:text-[#1E40AF]">Terms of Service</a>
 						and
-						<a href="/privacy" class="underline">Privacy Policy</a>, and you may receive communications from us.
+						<a href="/privacy" class="underline text-[#3182CE] hover:text-[#1E40AF]">Privacy Policy</a>, and you may receive communications from us.
 					</p>
 				</div>
 			</div>
 		</div>
 
 		<div
-			class="hidden content-center items-center bg-neutral-50 md:col-span-5 md:col-start-5 md:flex"
+			class="hidden content-center items-center bg-gradient-to-br from-[#3182CE]/5 to-[#63B3ED]/10 md:col-span-5 md:col-start-5 md:flex"
 		>
-			<div class="relative m-auto flex flex-col gap-6">
-				<div class="absolute -top-9 -left-11 select-none">
-					<svg
-						class="scale-x-[-1]"
-						fill="#EEE"
-						version="1.1"
-						xmlns="http://www.w3.org/2000/svg"
-						xmlns:xlink="http://www.w3.org/1999/xlink"
-						width="60px"
-						height="60px"
-						viewBox="0 0 98.829 98.829"
-						xml:space="preserve"
-					>
-						<g>
-							<g>
-								<path
-									d="M96.76,41.603C91.511,22.831,78.562,9.204,65.975,9.204c-1.011,0-2.021,0.088-3.005,0.262
-                          c-0.558,0.098-1.046,0.426-1.348,0.902c-0.301,0.479-0.386,1.061-0.233,1.605l2.591,9.268c0.25,0.895,1.113,1.5,2.01,1.459
-                          l0.206-0.004c4.668,0,13.199,6.996,17.548,22.545c0.172,0.617,0.335,1.248,0.492,1.906c-4.882-2.416-10.706-2.975-15.98-1.506
-                          C56.358,48.97,49.388,61.356,52.714,73.252c2.696,9.639,11.563,16.373,21.563,16.373c2.037,0,4.071-0.281,6.046-0.834
-                          c7.846-2.193,13.745-8.707,16.611-18.338C99.521,61.764,99.456,51.249,96.76,41.603z"
-								/>
-								<path
-									d="M14.088,9.206c-1.009,0-2.02,0.086-3.003,0.26c-0.557,0.096-1.046,0.426-1.347,0.902
-                          c-0.301,0.479-0.386,1.061-0.234,1.605l2.592,9.268c0.25,0.895,1.097,1.5,2.01,1.459l0.204-0.004
-                          c4.668,0,13.2,6.996,17.549,22.545c0.173,0.621,0.336,1.252,0.492,1.906c-4.884-2.416-10.706-2.975-15.98-1.506
-                          C4.475,48.97-2.497,61.356,0.831,73.252c2.696,9.639,11.563,16.373,21.563,16.373c2.037,0,4.071-0.281,6.047-0.834
-                          c7.845-2.193,13.744-8.707,16.611-18.338c2.586-8.689,2.522-19.205-0.175-28.852C39.625,22.831,26.678,9.206,14.088,9.206z"
-								/>
-							</g>
-						</g>
-					</svg>
+			<div class="relative m-auto flex flex-col gap-8 text-center">
+				<div class="mb-8">
+					<h2 class="text-4xl font-bold text-[#1F2937] mb-4">Transform Your Fitness Journey</h2>
+					<p class="text-xl text-slate-600">AI-powered physiotherapy guidance for better health and mobility</p>
 				</div>
-				<blockquote class="z-10 max-w-lg text-3xl">
-					"Transform your fitness journey with AI-powered physiotherapy guidance."
-				</blockquote>
+				
+				<div class="space-y-6">
+					<div class="flex items-center justify-center space-x-4">
+						<div class="w-12 h-12 bg-gradient-to-br from-[#3182CE] to-[#63B3ED] rounded-2xl flex items-center justify-center">
+							<span class="text-white text-xl">🎯</span>
+						</div>
+						<div class="text-left">
+							<h3 class="font-bold text-[#1F2937]">Personalized Plans</h3>
+							<p class="text-slate-600 text-sm">Tailored to your specific goals and needs</p>
+						</div>
+					</div>
+					
+					<div class="flex items-center justify-center space-x-4">
+						<div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center">
+							<span class="text-white text-xl">⏱️</span>
+						</div>
+						<div class="text-left">
+							<h3 class="font-bold text-[#1F2937]">Built-in Timers</h3>
+							<p class="text-slate-600 text-sm">Perfect timing for every exercise</p>
+						</div>
+					</div>
+					
+					<div class="flex items-center justify-center space-x-4">
+						<div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center">
+							<span class="text-white text-xl">📈</span>
+						</div>
+						<div class="text-left">
+							<h3 class="font-bold text-[#1F2937]">Progress Tracking</h3>
+							<p class="text-slate-600 text-sm">Monitor your improvement over time</p>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
